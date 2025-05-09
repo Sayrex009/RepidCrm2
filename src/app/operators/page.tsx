@@ -139,7 +139,7 @@ export default function OperatorPage() {
         key: "delete",
         label: <span className="text-red-600 font-medium">O'chirish</span>,
         onClick: () => handleDelete(id),
-        className: "hover:bg-red-50",
+        className: "hover:bg-red-50"
       },
     ],
   });

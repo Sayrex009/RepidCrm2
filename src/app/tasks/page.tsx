@@ -92,10 +92,10 @@ export default function TasksPage() {
         formData.append("image_task", values.image.file.originFileObj);
       }
 
-      console.log("Form data to be sent:", formData); // For debugging
+      console.log("Form data to be sent:", formData); 
 
       const response = await axios.post(
-        "https://crmm.repid.uz/common/task", // Create new task API
+        "https://crmm.repid.uz/common/task", 
         formData,
         {
           headers: {
@@ -114,7 +114,6 @@ export default function TasksPage() {
       message.error("Xatolik yuz berdi.");
     }
   };
-
   return (
     <main className="px-[15px] sm:px-[30px] pt-[20px] pb-[40px] lg:overflow-auto h-[calc(100%-80px)]">
       <h1 className="text-[#26273F] font-bold text-[24px] md:text-[32px] mb-5 md:mb-7">Vazifalar</h1>
@@ -179,7 +178,7 @@ export default function TasksPage() {
                 </Select.Option>
               ) : employees.length > 0 ? (
                 employees.map((employee: any) => {
-                  if (!employee.id) return null; // Пропускаем сотрудников с неверным id
+                  if (!employee.id) return null;
                   return (
                     <Select.Option key={employee.id} value={employee.id}>
                       {employee.first_name} {employee.last_name}

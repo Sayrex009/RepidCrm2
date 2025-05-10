@@ -47,17 +47,17 @@ const Navbar = () => {
     <>
       {/* Mobile Navbar */}
       <div className="px-4 pt-3 fixed lg:hidden z-50">
-        <div className="h-[70px] w-[475px] flex items-center justify-between bg-white rounded-[24px] p-4 shadow-lg">
+        <div className="h-[70px] w-full flex items-center justify-between bg-white rounded-[24px] p-4 shadow-lg">
           <Link href="/employees">
             <Image
               src={repidLogo}
               alt="repid logo"
               width={80}
               height={40}
-              className="mr-[355px]"
+              className="mr-[250px]"
             />
           </Link>
-          <div className="flex gap-1 w-[380px] justify-between items-center">
+          <div className="flex gap-1  justify-between items-center">
             <button
               onClick={() => setSearchOpen(!searchOpen)}
               className="p-2 sm:mr-2 rounded-full hover:bg-gray-100 transition duration-200"
@@ -106,7 +106,17 @@ const Navbar = () => {
       {mobileMenuOpen && (
         <div className="fixed inset-0 bg-white z-[998] p-4">
           <div className="flex justify-between items-center mb-4">
-            <p className="text-lg font-semibold text-[#002B48]">Menyu</p>
+            <div className="border-t border-gray-200 my-2"></div>
+
+            <div className="">
+              <Image
+                src={repidLogo}
+                alt="repid logo"
+                width={80}
+                height={40}
+                className="mr-[355px]"
+              />
+            </div>
             <button onClick={() => setMobileMenuOpen(false)}>
               <X size={24} color="#64748B" />
             </button>

@@ -92,7 +92,6 @@ export default function OperatorPage() {
     }
   };
 
-  // Оператор қўшиш
   const handleAddOperator = async (values: any) => {
     try {
       await axios.post(
@@ -117,7 +116,6 @@ export default function OperatorPage() {
     }
   };
 
-  // Операторни ўчириш
   const handleDelete = async (id: number) => {
     try {
       await axios.delete(`https://crmm.repid.uz/operator/${id}`, {
@@ -132,7 +130,6 @@ export default function OperatorPage() {
     }
   };
 
-  // Action меню
   const actionMenu = (id: number): MenuProps => ({
     items: [
       {
@@ -145,14 +142,13 @@ export default function OperatorPage() {
   });
 
   if (authStatus === "loading")
-    return <div className="text-center py-8 text-gray-600">Yuklanmoqda...</div>;
+    return <div className="spinner"></div>;
 
   return (
     <main className="min-h-screen bg-gray-100 px-4 sm:px-6 pt-24 pb-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Operatorlar</h1>
 
-        {/* Фильтр ва қўшиш тугмаси */}
         <div className="flex flex-col sm:flex-row justify-between gap-4 mb-8">
           <Select
             mode="multiple"
@@ -174,48 +170,71 @@ export default function OperatorPage() {
           </Button>
         </div>
 
-        {/* Операторлар рўйхати */}
-        <div className="grid gap-4">
-          {operators.map((operator) => (
-            <div
-              key={operator.id}
-              className="bg-white rounded-xl p-6 shadow-sm transition-all hover:shadow-md"
-            >
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    {operator.full_name}
-                  </h3>
-                  <p className="text-gray-600 mt-1">{operator.phone_number}</p>
+      <div className="flex flex-col gap-y-5">
+  {operators.map((operator) => (
+    <div
+      key={operator.id}
+      className="w-full bg-white rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition"
+    >
+      <div className="flex flex-col md:flex-row w-full overflow-hidden">
+        {/* Левая колонка */}
+        <div className="w-full xl:min-w-[470px] xl:max-w-[470px] md:min-w-[400px] md:max-w-[400px] border-b md:border-b-0 md:border-r border-[#E4E6E8] p-6 flex flex-col justify-center gap-4">
+          <div>
+            <span className="text-[#91929E] text-sm">Operator</span>
+            <p className="text-[#0A1629] text-[20px] md:text-[26px] font-semibold line-clamp-1">
+              {operator.full_name}
+            </p>
+          </div>
+          <div>
+            <span className="text-[#91929E] text-sm">Telefon raqam</span>
+            <p className="text-[#0A1629] text-base">{operator.phone_number}</p>
+          </div>
+        </div>
 
-                  <div className="mt-4 flex items-center gap-3">
-                    <span
-                      className={`py-1.5 px-3 rounded-full text-sm border ${getStatusStyle(
-                        operator.status
-                      )}`}
-                    >
-                      {
-                        statusOptions.find((s) => s.value === operator.status)
-                          ?.label
-                      }
-                    </span>
-                    <span className="text-gray-500 text-sm">
-                      {operator.operator_type}
-                    </span>
-                  </div>
-                </div>
-
-                <Dropdown
-                  menu={actionMenu(operator.id)}
-                  trigger={["click"]}
-                  placement="bottomRight"
+        {/* Правая колонка */}
+        <div className="flex-1 py-6 pl-6 md:pl-[60px] pr-6 md:pr-[40px] flex flex-col justify-between">
+          <div>
+            <p className="text-base md:text-lg text-[#0A1629] font-semibold mb-[15px]">
+              Operator ma’lumotlari
+            </p>
+            <div className="flex flex-wrap gap-x-[60px] gap-y-4">
+              <div className="flex flex-col items-start gap-2">
+                <span className="text-[#91929E] text-sm md:text-base">Holati</span>
+                <span
+                  className={`text-sm py-0.5 border px-2 rounded mt-2 ${getStatusStyle(
+                    operator.status
+                  )}`}
                 >
-                  <MoreOutlined className="text-2xl text-gray-500 hover:text-gray-700 cursor-pointer" />
-                </Dropdown>
+                  {
+                    statusOptions.find((s) => s.value === operator.status)
+                      ?.label
+                  }
+                </span>
+              </div>
+              <div className="flex flex-col items-start gap-2">
+                <span className="text-[#91929E] text-sm md:text-base">Operator turi</span>
+                <span className="text-[#0A1629] mt-2 text-sm md:text-base">
+                  {operator.operator_type}
+                </span>
               </div>
             </div>
-          ))}
+          </div>
+
+          <div className="self-end mt-6">
+            <Dropdown
+              menu={actionMenu(operator.id)}
+              trigger={["click"]}
+              placement="bottomRight"
+            >
+              <MoreOutlined className="text-2xl text-gray-500 hover:text-gray-700 cursor-pointer" />
+            </Dropdown>
+          </div>
         </div>
+      </div>
+    </div>
+  ))}
+</div>
+
 
         {/* Пагинация */}
         <div className="mt-6 flex justify-center">

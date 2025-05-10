@@ -2,15 +2,22 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  ComposedChart,
+  Line,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 export default function IncomePage() {
   const { data: session } = useSession();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // Массив для цветов, чтобы разделить сегменты на графике
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,26 +28,17 @@ export default function IncomePage() {
       }
 
       try {
-        const response = await fetch(
-          "https://crmm.repid.uz/income/pie-chart",
-          {
-            headers: {
-              Authorization: `Bearer ${session.accessToken}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await fetch("https://crmm.repid.uz/income/pie-chart", {
+          headers: {
+            Authorization: `Bearer ${session.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        });
 
-        if (!response.ok) {
-          throw new Error(`Server error: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
         const result = await response.json();
-
-        // Выводим результат, чтобы понять структуру данных
-        console.log("Fetched data:", result);
-
-        setData(result); // Получаем данные для круговой диаграммы
+        setData(result);
       } catch (error) {
         console.error("Fetch error:", error);
       } finally {
@@ -51,48 +49,40 @@ export default function IncomePage() {
     fetchData();
   }, [session]);
 
-  if (loading) return <p>Yuklanmoqda...</p>;
-
-  // Проверка и преобразование данных
-  let pieData = [];
-
-  // Если данные - это объект, преобразуем его в массив
-  if (Array.isArray(data)) {
-    pieData = data.map((item: any) => ({
-      name: item.name,
-      value: item.value,
-    }));
-  } else if (typeof data === "object") {
-    // Если данные это объект с ключами, то преобразуем их в массив
-    pieData = Object.keys(data).map((key) => ({
-      name: `Category ${key}`, // Можно задать более осмысленные имена
-      value: data[key],
-    }));
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-96">
+        <p className="text-lg text-gray-600 animate-pulse">Yuklanmoqda...</p>
+      </div>
+    );
   }
 
-  return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">Kirim chiqim</h1>
+  const chartData = Array.isArray(data)
+    ? data.map((item: any) => ({ category: item.name, value: item.value }))
+    : typeof data === "object"
+    ? Object.keys(data).map((key) => ({
+        category: `Kategoriya ${key}`,
+        value: data[key],
+      }))
+    : [];
 
-      <ResponsiveContainer width="100%" height={400}>
-        <PieChart>
-          <Pie
-            data={pieData}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            outerRadius={80}
-            fill="#8884d8"
-            label
-          >
-            {pieData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip />
-        </PieChart>
-      </ResponsiveContainer>
+  return (
+    <div className="p-6 md:p-10">
+      <h1 className="text-3xl font-semibold text-gray-800 mb-8">Kirim va Chiqim Tahlili</h1>
+
+      <div className="w-full h-[400px] bg-white rounded-2xl shadow-md p-4">
+        <ResponsiveContainer width="100%" height="100%">
+          <ComposedChart data={chartData}>
+            <CartesianGrid stroke="#f5f5f5" />
+            <XAxis dataKey="category" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="value" barSize={30} fill="#8884d8" />
+            <Line type="monotone" dataKey="value" stroke="#ff7300" />
+          </ComposedChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }

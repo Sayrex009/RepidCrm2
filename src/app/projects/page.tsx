@@ -41,7 +41,11 @@ export default function ProjectsPage() {
   const fetchProjects = async (
     startDate: string,
     endDate: string,
+<<<<<<< HEAD
     token: string
+=======
+    token: string,
+>>>>>>> 2edad81bff20d2c1ac35e5a47c3a3fa6c4b54297
   ) => {
     try {
       setLoading(true);
@@ -98,11 +102,15 @@ export default function ProjectsPage() {
       : projects.filter((p) => p.status === statusFilter);
 
   if (status === "loading")
+<<<<<<< HEAD
     return (
       <div className="justify-center items-center flex h-screen">
         <div className="spinner"></div>
       </div>
     );
+=======
+    return <p className="text-center py-8 text-gray-600">Yuklanmoqda...</p>;
+>>>>>>> 2edad81bff20d2c1ac35e5a47c3a3fa6c4b54297
   if (status === "unauthenticated")
     return (
       <p className="text-center py-8 text-red-500">Kirish talab qilinadi</p>
@@ -238,15 +246,25 @@ export default function ProjectsPage() {
                           project.status === "in_progres"
                             ? "text-[#FFA500] border-[#F48C05] bg-[#F48C05]/10"
                             : project.status === "done"
+<<<<<<< HEAD
                             ? "text-[#00D388] border-[#00D388] bg-[#00D388]/10"
                             : "text-gray-600 border-gray-300 bg-gray-100"
+=======
+                              ? "text-[#00D388] border-[#00D388] bg-[#00D388]/10"
+                              : "text-gray-600 border-gray-300 bg-gray-100"
+>>>>>>> 2edad81bff20d2c1ac35e5a47c3a3fa6c4b54297
                         }`}
                       >
                         {project.status === "in_progres"
                           ? "Jaroyonda"
                           : project.status === "done"
+<<<<<<< HEAD
                           ? "Tugallangan"
                           : "Noma’lum"}
+=======
+                            ? "Tugallangan"
+                            : "Noma’lum"}
+>>>>>>> 2edad81bff20d2c1ac35e5a47c3a3fa6c4b54297
                       </button>
                     </div>
                     <div className="flex flex-col items-start gap-2">

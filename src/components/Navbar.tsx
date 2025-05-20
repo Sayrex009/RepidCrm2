@@ -9,9 +9,17 @@ import {
   ListTodoIcon,
   Users,
   LogOut,
+<<<<<<< HEAD
   ArrowDownUpIcon,
   ChartPieIcon,
   HeadsetIcon,
+=======
+  SquarePenIcon,
+  ArrowDownUpIcon,
+  ChartPieIcon,
+  HeadsetIcon,
+  CalculatorIcon,
+>>>>>>> 2edad81bff20d2c1ac35e5a47c3a3fa6c4b54297
   Menu,
   X,
   Search as SearchIcon,
@@ -31,6 +39,11 @@ const Navbar = () => {
     { href: "/operators", icon: <HeadsetIcon />, label: "Operator" },
     { href: "/tasks", icon: <ListTodoIcon />, label: "Vazifalar" },
     { href: "/projects", icon: <Users />, label: "Loyihalar" },
+<<<<<<< HEAD
+=======
+    { href: "/estimated", icon: <CalculatorIcon />, label: "Taxminiy hisob" },
+    { href: "/questionnaire", icon: <SquarePenIcon />, label: "So'rovnoma" },
+>>>>>>> 2edad81bff20d2c1ac35e5a47c3a3fa6c4b54297
   ];
 
   const toggleBodyOverflow = (isOpen: boolean) => {

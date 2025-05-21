@@ -1,10 +1,9 @@
-<<<<<<< HEAD
 "use client";
 
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
-import Expance from '@/components/Expance'
+import Expance from "@/components/Expance";
 
 import {
   PieChart,
@@ -360,12 +359,11 @@ export default function DashboardCharts() {
           Chiqim
         </button>
       </div>
-
+      <h2 className="text-xl mb-4 font-semibold text-gray-800">
+        {activeTab === "income" ? "Kirimlar" : "Chiqimlar"} bo'yicha grafik
+      </h2>
       <section className="bg-white rounded-xl p-6 shadow-md mb-10">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-gray-800">
-            {activeTab === "income" ? "Kirimlar" : "Chiqimlar"} bo'yicha grafik
-          </h2>
           <div className="flex gap-3">
             <button
               onClick={() => setActiveLineTab("year")}
@@ -431,12 +429,11 @@ export default function DashboardCharts() {
           </ResponsiveContainer>
         </div>
       </section>
-
+      <h3 className="text-center mt-4 text-lg font-semibold mb-4">
+        {activeTab === "income" ? "Tushumlar" : "Chiqimlar"}
+      </h3>
       <section className="bg-white rounded-xl p-6 shadow-md flex flex-col md:flex-row items-center md:items-start mb-10">
         <div className="w-full md:w-2/3 h-[450px]">
-          <h3 className="text-center text-lg font-semibold mb-4">
-            {activeTab === "income" ? "Tushumlar" : "Chiqimlar"}
-          </h3>
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
@@ -700,113 +697,7 @@ export default function DashboardCharts() {
           ))}
         </div>
       </section>
-      <Expance/>
+      <Expance />
     </main>
   );
 }
-=======
-'use client';
-
-import React, { useState } from 'react';
-import { Card, Input, InputNumber, DatePicker, Button, Alert, message } from 'antd';
-import dayjs from 'dayjs';
-import { useSession } from 'next-auth/react';
-import { div } from 'framer-motion/client';
-
-const CreateIncomeProject: React.FC = () => {
-  const { data: session } = useSession();
-  const [payPrice, setPayPrice] = useState<number | null>(null);
-  const [projectId, setProjectId] = useState<number>(0);
-  const [description, setDescription] = useState('');
-  const [datePaid, setDatePaid] = useState<string>(new Date().toISOString());
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = async () => {
-    if (!session?.accessToken) {
-      setError('Not authenticated');
-      return;
-    }
-
-    if (!payPrice || !projectId || !description || !datePaid) {
-      setError('Please fill all fields');
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch('https://crmm.repid.uz/income/project', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${session.accessToken}`,
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          pay_price: String(payPrice),
-          project_id: projectId,
-          description,
-          date_paid: datePaid
-        })
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        console.error('Error:', result);
-        throw new Error(result?.detail || 'Failed to submit income');
-      }
-
-      message.success('Доход успешно создан!');
-      // Очистка формы
-      setPayPrice(null);
-      setProjectId(0);
-      setDescription('');
-      setDatePaid(new Date().toISOString());
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className='mt-24'>
-    <Card title="Создание дохода проекта" style={{ maxWidth: 500, margin: 'auto' }}>
-      {error && <Alert message="Ошибка" description={error} type="error" showIcon style={{ marginBottom: 16 }} />}
-      <InputNumber
-        value={payPrice ?? undefined}
-        onChange={(value) => setPayPrice(value)}
-        placeholder="Сумма (pay_price)"
-        style={{ width: '100%', marginBottom: 16 }}
-      />
-      <InputNumber
-        value={projectId}
-        onChange={(value) => setProjectId(value || 0)}
-        placeholder="ID проекта (project_id)"
-        style={{ width: '100%', marginBottom: 16 }}
-      />
-      <Input.TextArea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Описание"
-        rows={3}
-        style={{ marginBottom: 16 }}
-      />
-      <DatePicker
-        style={{ width: '100%', marginBottom: 16 }}
-        value={dayjs(datePaid)}
-        onChange={(date) => setDatePaid(date?.toISOString() || new Date().toISOString())}
-      />
-      <Button type="primary" onClick={handleSubmit} loading={loading} block>
-        Отправить
-      </Button>
-    </Card>
-    </div>
-  );
-};
-
-export default CreateIncomeProject;
->>>>>>> 2edad81bff20d2c1ac35e5a47c3a3fa6c4b54297

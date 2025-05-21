@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 export default function EmployeesPage() {
   const { data: session } = useSession();
   const [employees, setEmployees] = useState([]);
@@ -10,6 +11,7 @@ export default function EmployeesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [selectedPosition, setSelectedPosition] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (session?.accessToken) {
@@ -174,7 +176,7 @@ export default function EmployeesPage() {
                 <p className="text-[#0A1629]">
                   {employee.date_of_jobstarted
                     ? new Date(employee.date_of_jobstarted).toLocaleDateString(
-                        "ru-RU",
+                        "ru-RU"
                       )
                     : ""}
                 </p>
@@ -182,24 +184,21 @@ export default function EmployeesPage() {
             </div>
 
             <div className="md:h-full md:flex items-center justify-center absolute md:w-[80px] top-3 right-3 md:top-0 md:right-0 md:bg-white">
-              <button className="md:bg-gray-200/80 w-[40px] h-[40px] flex items-center justify-center rounded-md">
-                <span
-                  role="img"
-                  aria-label="more"
-                  className="anticon anticon-more text-[28px] md:text-[24px]"
+              <button
+                onClick={() => router.push(`/profiles/${employee.id}`)}
+                className="md:bg-gray-200/80 w-[40px] h-[40px] flex items-center justify-center rounded-md"
+              >
+                <svg
+                  viewBox="64 64 896 896"
+                  focusable="false"
+                  data-icon="more"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  aria-hidden="true"
                 >
-                  <svg
-                    viewBox="64 64 896 896"
-                    focusable="false"
-                    data-icon="more"
-                    width="1em"
-                    height="1em"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path d="M456 231a56 56 0 10112 0 56 56 0 10-112 0zm0 280a56 56 0 10112 0 56 56 0 10-112 0zm0 280a56 56 0 10112 0 56 56 0 10-112 0z"></path>
-                  </svg>
-                </span>
+                  <path d="M456 231a56 56 0 10112 0 56 56 0 10-112 0zm0 280a56 56 0 10112 0 56 56 0 10-112 0zm0 280a56 56 0 10112 0 56 56 0 10-112 0z"></path>
+                </svg>
               </button>
             </div>
           </div>

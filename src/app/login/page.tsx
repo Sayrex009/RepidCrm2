@@ -26,11 +26,7 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-<<<<<<< HEAD
         throw new Error("Login yoki parol notog'ri");
-=======
-        throw new Error("Неверные учетные данные");
->>>>>>> 2edad81bff20d2c1ac35e5a47c3a3fa6c4b54297
       } else {
         router.push("/employees");
       }
@@ -44,11 +40,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen">
       {/* Left Side - Placeholder for background image */}
-<<<<<<< HEAD
       <div className="hidden justify-center items-center lg:flex relative w-[850px] h-[880px] lg:ml-[40px] lg:mt-[34px] bg-[#23243E]  rounded-[29px]">
-=======
-      <div className="hidden justify-center items-center lg:flex lg:block relative w-[850px] h-[880px] lg:ml-[40px] lg:mt-[34px] bg-[#23243E]  rounded-[29px]">
->>>>>>> 2edad81bff20d2c1ac35e5a47c3a3fa6c4b54297
         <Image src={repidLogo} alt="logo" />
       </div>
 

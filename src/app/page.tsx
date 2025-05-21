@@ -3,18 +3,13 @@
 import { useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
 import Navbar from './../components/Navbar'
-<<<<<<< HEAD
 import { useEffect, useState } from 'react'
-=======
-import { useEffect } from 'react'
->>>>>>> 2edad81bff20d2c1ac35e5a47c3a3fa6c4b54297
 
 export default function SessionWrapper({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession()
   const pathname = usePathname()
   const router = useRouter()
 
-<<<<<<< HEAD
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -24,10 +19,6 @@ export default function SessionWrapper({ children }: { children: React.ReactNode
     }
 
     setLoading(false)
-=======
-  useEffect(() => {
-    if (status === 'loading') return
->>>>>>> 2edad81bff20d2c1ac35e5a47c3a3fa6c4b54297
 
     if (!session && pathname !== '/login') {
       router.push('/login')
@@ -40,11 +31,7 @@ export default function SessionWrapper({ children }: { children: React.ReactNode
     }
   }, [session, status, pathname, router])
 
-<<<<<<< HEAD
   if (loading) return <div className='spinner'></div> 
-=======
-  if (status === 'loading') return null
->>>>>>> 2edad81bff20d2c1ac35e5a47c3a3fa6c4b54297
 
   return (
     <div className="flex">

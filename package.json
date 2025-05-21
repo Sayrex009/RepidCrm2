@@ -11,11 +11,7 @@
   "dependencies": {
     "@ant-design/cssinjs": "^1.23.0",
     "@ant-design/icons": "^6.0.0",
-<<<<<<< HEAD
     "antd": "^5.25.2",
-=======
-    "antd": "^5.25.1",
->>>>>>> 2edad81bff20d2c1ac35e5a47c3a3fa6c4b54297
     "axios": "^1.9.0",
     "date": "^2.0.6",
     "dayjs": "^1.11.13",
